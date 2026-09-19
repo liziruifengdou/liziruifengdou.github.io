@@ -1,0 +1,9 @@
+name = "fengdou-search"
+main = "src/index.js"
+compatibility_date = "2026-09-18"
+
+[vars]
+ALLOWED_ORIGIN = "https://liziruifengdou.github.io"
+CORPUS_URL = "https://liziruifengdou.github.io/data/search.json"
+MODEL = "gpt-5.6-terra"
+API_BASE = "https://sub.codeapi.icu/v1"
