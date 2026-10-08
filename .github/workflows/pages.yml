@@ -29,6 +29,7 @@ jobs:
           cp index.html app.js album.js favicon.png avatar.png .pages-site/
           cp data/search.json data/context.json data/album.json .pages-site/data/
           cp -R data/album .pages-site/data/album
+          cp -R fengdou .pages-site/fengdou
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
