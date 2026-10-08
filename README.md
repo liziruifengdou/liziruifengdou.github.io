@@ -1,5 +1,13 @@
 # fengdou archive
 
+## Fengdou 找搭子
+
+[打开网页游戏](https://liziruifengdou.github.io/fengdou/)
+
+游戏位于 `fengdou/`，打开链接即可玩，无需账号或安装。电脑使用 WASD / 方向键移动、空格冲刺；手机按住游戏画面拖动移动。最高分保存在当前浏览器。
+
+更新游戏时替换 `fengdou/` 下的静态文件，提交到 `main` 后由现有 GitHub Actions 一起发布。
+
 ## 功能
 
 - 关键词搜索、排序和分页
