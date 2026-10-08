@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#153c32">
+  <meta name="description" content="Fengdou 出门找搭子！三关校园生存冒险，每关三分钟。招募搭子、探索校园奇遇、搭配三系技能。">
+  <title>Fengdou · 搭子幸存者</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23153c32'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='23' fill='%23f8d45b'%3EF%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div class="brand"><span class="brandmark">f.</span><div><span class="eyebrow">FENGDOU'S LITTLE ADVENTURE</span><h1>搭子幸存者<span class="edition">榆中校区篇</span></h1></div></div>
+      <div class="header-right"><p>一个人出门，<em>一队人回家。</em></p><button id="expand-btn" class="icon-btn" aria-label="放大游戏画面" aria-pressed="false" title="放大画面（F）">⛶<span>放大画面</span></button><button id="sound-btn" class="icon-btn" aria-label="开启音效" title="开启音效">♫<span>音效关</span></button><button id="atlas-btn" class="icon-btn" aria-label="搭子图鉴" title="搭子图鉴">☷<span>搭子图鉴</span></button><button id="help-btn" class="icon-btn" aria-label="查看玩法" title="查看玩法">?<span>怎么玩</span></button></div>
+    </header>
+    <div class="game-layout">
+      <section class="arena" id="arena" aria-label="搭子幸存者游戏区域">
+        <button id="expanded-close" class="expanded-close" aria-label="收起游戏画面" title="收起画面（F）" hidden>×</button>
+        <canvas id="game" tabindex="0" aria-label="游戏画面。使用方向键或 WASD 移动，空格冲刺，P 暂停。也可以按住鼠标或手指拖动移动。"></canvas>
+        <div class="hud"><div class="health-panel"><div class="hero-mini"><img src="assets/fengdou.png" alt="Fengdou 的卡通形象"></div><div class="health-text"><span>Fengdou <b id="level">LV. 1</b></span><div class="health-track"><i id="health-bar"></i></div><small id="health-label">社交电量 100 / 100</small></div></div><div class="timer"><span id="phase-label">周末 · 榆中校区</span><strong id="timer">02:00</strong></div><button id="pause-btn" class="pause-btn" aria-label="暂停游戏" disabled>Ⅱ</button></div>
+        <div class="xp-track" aria-label="升级进度"><i id="xp-bar"></i></div>
+        <div id="boss-hud" class="boss-hud" hidden><span id="boss-title">关底对手</span><div><i id="boss-bar"></i></div></div>
+        <div id="challenge-hud" class="challenge-hud" hidden><span id="challenge-label"></span><div><i id="challenge-bar"></i></div></div>
+        <div id="announcement" class="announcement" aria-live="polite"></div>
+        <div class="map-caption" id="map-caption"><span>兰州大学 · 榆中校区</span><b>萃英山下，今天搭个伴</b></div>
+        <button id="minimap-button" class="minimap-panel" aria-label="打开校园全图" title="校园全图（M）" hidden><canvas id="minimap" width="300" height="200" aria-hidden="true"></canvas><span>校园全图 · M</span></button>
+        <div class="view-controls" aria-label="地图视野"><button id="zoom-out" aria-label="拉远视野" title="拉远视野（减号）">−</button><span id="zoom-label">100%</span><button id="zoom-in" aria-label="放大视野" title="放大视野（加号）">＋</button></div>
+        <div id="joystick" class="joystick" aria-hidden="true"><i></i></div>
+        <button id="navigation" class="navigation" hidden aria-label="查看校园奇遇地图"><span id="nav-arrow" aria-hidden="true">➤</span><span id="nav-label"></span></button>
+        <button id="dash-btn" class="dash-btn" aria-label="冲刺" disabled><span>疾走</span><small>SPACE</small><i id="dash-cooldown"></i></button>
+        <div id="overlay" class="overlay"><div id="dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title"></div></div>
+      </section>
+      <aside class="sidebar">
+        <section class="journey-panel"><div class="panel-heading"><h2 id="chapter-title">校园初遇</h2><span id="chapter-count">01 / 03</span></div><div id="chapter-route" class="chapter-route"></div><p id="chapter-goal">每关坚持 3 分钟 · 技能和搭子延续</p></section>
+        <section class="crew-panel"><div class="panel-heading"><h2>榆中搭子局</h2><span id="crew-count">1 / 4</span></div><p class="panel-note">走到地图集合点，邀请新搭子。</p><div id="crew-list" class="crew-list"></div><div id="synergy" class="synergy"><span>✦ 默契加成</span><p>不同搭子组队，会擦出不一样的火花。</p></div></section>
+        <section class="landmark-panel"><div class="panel-heading"><h2>校园奇遇</h2><button id="places-btn" class="text-btn">看地图 <span id="landmark-count">0 / 3</span> ↗</button></div><div id="landmark-list" class="landmark-list"></div></section>
+        <section class="skill-panel"><div class="panel-heading"><h2>Fengdou 技能</h2><span>三系成长</span></div><div id="skill-list" class="skill-list"></div></section>
+        <section class="run-panel"><div class="panel-heading"><h2>本局小战报</h2><span id="xp-label">默契 0 / 20</span></div><div class="run-stats"><div><strong id="kills">0</strong><span>击退的对手</span></div><div><strong id="best">0</strong><span>本机最高分</span></div></div></section>
+        <div class="tiny-note"><span>好搭子不怕多</span><span>GOOD COMPANY, GOOD GAME.</span></div>
+      </aside>
+    </div>
+    <footer><div class="controls"><span><kbd>W A S D</kbd> / <kbd>↑ ↓ ← →</kbd> 移动</span><span><kbd>空格</kbd> 冲刺</span><span><kbd>P</kbd> 暂停</span><span class="mouse-tip">也可按住画面拖动</span></div><span class="footer-tag">自动出招 · 三系技能 · 三关连续冒险 · <kbd>M</kbd> 全图 · <kbd>F</kbd> 放大画面</span></footer>
+    <div class="sr-only" id="live-status" aria-live="polite"></div>
+  </main>
+  <script src="engine.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
