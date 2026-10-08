@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
+  <meta name="fengdou-room-endpoint" content="https://fengdou-campus-survivors.major-char-1417.chatgpt.site/api/room">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#153c32">
-  <meta name="description" content="Fengdou 出门找搭子！三关校园生存冒险，每关三分钟。招募搭子、探索校园奇遇、搭配三系技能。">
+  <meta name="description" content="Fengdou 出门找搭子！支持最多 8 人联机的校园生存冒险，每关三分钟。招募搭子、探索校园奇遇、搭配三系技能。">
   <title>Fengdou · 搭子幸存者</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23153c32'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='23' fill='%23f8d45b'%3EF%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
@@ -23,6 +24,7 @@
         <div class="xp-track" aria-label="升级进度"><i id="xp-bar"></i></div>
         <div id="boss-hud" class="boss-hud" hidden><span id="boss-title">关底对手</span><div><i id="boss-bar"></i></div></div>
         <div id="challenge-hud" class="challenge-hud" hidden><span id="challenge-label"></span><div><i id="challenge-bar"></i></div></div>
+        <button id="network-hud" class="network-hud" hidden></button>
         <div id="announcement" class="announcement" aria-live="polite"></div>
         <div class="map-caption" id="map-caption"><span>兰州大学 · 榆中校区</span><b>萃英山下，今天搭个伴</b></div>
         <button id="minimap-button" class="minimap-panel" aria-label="打开校园全图" title="校园全图（M）" hidden><canvas id="minimap" width="300" height="200" aria-hidden="true"></canvas><span>校园全图 · M</span></button>
@@ -35,6 +37,7 @@
       <aside class="sidebar">
         <section class="journey-panel"><div class="panel-heading"><h2 id="chapter-title">校园初遇</h2><span id="chapter-count">01 / 03</span></div><div id="chapter-route" class="chapter-route"></div><p id="chapter-goal">每关坚持 3 分钟 · 技能和搭子延续</p></section>
         <section class="crew-panel"><div class="panel-heading"><h2>榆中搭子局</h2><span id="crew-count">1 / 4</span></div><p class="panel-note">走到地图集合点，邀请新搭子。</p><div id="crew-list" class="crew-list"></div><div id="synergy" class="synergy"><span>✦ 默契加成</span><p>不同搭子组队，会擦出不一样的火花。</p></div></section>
+        <section class="evolution-panel"><div class="panel-heading"><h2>组合进化 <span id="evolution-count">0 / 3</span></h2><button id="evolutions-btn" class="text-btn" aria-label="查看进化配方">配方</button></div><div id="evolution-list"></div><p id="evolution-hint"></p></section>
         <section class="landmark-panel"><div class="panel-heading"><h2>校园奇遇</h2><button id="places-btn" class="text-btn">看地图 <span id="landmark-count">0 / 3</span> ↗</button></div><div id="landmark-list" class="landmark-list"></div></section>
         <section class="skill-panel"><div class="panel-heading"><h2>Fengdou 技能</h2><span>三系成长</span></div><div id="skill-list" class="skill-list"></div></section>
         <section class="run-panel"><div class="panel-heading"><h2>本局小战报</h2><span id="xp-label">默契 0 / 20</span></div><div class="run-stats"><div><strong id="kills">0</strong><span>击退的对手</span></div><div><strong id="best">0</strong><span>本机最高分</span></div></div></section>
@@ -45,6 +48,9 @@
     <div class="sr-only" id="live-status" aria-live="polite"></div>
   </main>
   <script src="engine.js"></script>
+  <script src="evolutions.js"></script>
+  <script src="coop-engine.js"></script>
+  <script src="network.js"></script>
   <script src="game.js"></script>
 </body>
 </html>
